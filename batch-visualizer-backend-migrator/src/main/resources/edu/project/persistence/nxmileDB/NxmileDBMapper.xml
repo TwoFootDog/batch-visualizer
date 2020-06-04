@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.project.persistence.nxmileDB.NxmileDBMapper">
+    <select id="getAllAprBatSchMst" resultType="edu.project.domain.AprBatSchMstVO">
+      SELECT
+        MBRSH_PGM_ID       AS mbrshPgmId,
+        MST_BAT_ID         AS mstBatId,
+        MST_BAT_NM         AS mstBatNm,
+        HOST_NM            AS hostNm,
+        INPUT_FILE_YN      AS inputFileYn,
+        FILE_ID            AS fileId,
+        HNM_FILE_NM        AS hnmFileNm,
+        PRE_BAT_EXIST_YN   AS preBatExistYn,
+        FILE_AUTO_SEND_YN  AS fileAutoSendYn,
+        MULTI_PROC_CNT     AS multiProcCnt,
+        REPORT_TYP         AS reportTyp,
+        APL_YN             AS aplYn,
+        REGR_ID            AS regrId,
+        REG_DT             AS regDt,
+        UPDR_ID            AS updrId,
+        UPD_DT             AS updDt
+    FROM APR_BATSCH_MST
+    WHERE 1=1
+  </select>
+
+    <select id="getAllAprBatProLst" resultType="edu.project.domain.AprBatProLstVO">
+      SELECT
+        MBRSH_PGM_ID          AS mbrshPgmId,
+        MST_BAT_ID            AS mstBatId,
+        WORK_SEQ              AS workSeq,
+        MULTI_PROC_SEQ        AS multiProcSeq,
+        PGM_ID                AS pgmId,
+        PGM_CD                AS pgmCd,
+        BAT_EXE_FILE_PATH_NM  AS batExeFilePathNm,
+        LOG_FILE_DESC         AS logFileDesc,
+        LOG_fILE_PATH_NM      AS logFilePathNm,
+        BAT_PARAM_DM          AS batParamDm,
+        BAT_PARAM_CNT         AS batParamCnt,
+        BAT_PARAM_VAL_CNTS1   AS batParamValCnts1,
+        BAT_PARAM_VAL_CNTS2   AS batParamValCnts2,
+        BAT_PARAM_VAL_CNTS3   AS batParamValCnts3,
+        BAT_PARAM_VAL_CNTS4   AS batParamValCnts4,
+        BAT_PARAM_VAL_CNTS5   AS batParamValCnts5,
+        BAT_PARAM_VAL_CNTS6   AS batParamValCnts6,
+        BAT_PARAM_VAL_CNTS7   AS batParamValCnts7,
+        BAT_PARAM_VAL_CNTS8   AS batParamValCnts8,
+        BAT_PARAM_VAL_CNTS9   AS batParamValCnts9,
+        BAT_PARAM_VAL_CNTS10  AS batParamValCnts10,
+        REGR_ID               AS regrId,
+        REG_DT                AS regDt,
+        UPDR_ID               AS updrId,
+        UPD_DT                AS updDt
+      FROM APR_BATPRO_LST
+      WHERE 1=1
+    </select>
+    <select id="getAllAprPrfBatMst" resultType="edu.project.domain.AprPrfBatMstVO">
+      SELECT
+        MBRSH_PGM_ID          AS mbrshPgmId,
+        MST_BAT_ID            AS mstBatId,
+        PRE_MST_BAT_ID        AS preMstBatId,
+        APL_YN                AS aplYn,
+        REGR_ID               AS regrId,
+        REG_DT                AS regDt,
+        UPDR_ID               AS updrId,
+        UPD_DT                AS updDt
+      FROM APR_PRFBAT_MST
+      WHERE 1=1
+    </select>
+
+    <select id="getComBatFileTrn" resultType="edu.project.domain.ComBatFileTrnVO">
+      SELECT
+        MBRSH_PGM_ID    AS mbrshPgmId,
+        FILE_ID         AS fileId,
+        FILE_NM         AS fileNm,
+        TRANS_RCV_FG    AS transRcvFg,
+        TRANS_ORGAN_CD  AS transOrganCd,
+        RCV_ORGAN_CD    AS rcvOrganCd,
+        STS_CD          AS stsCd,
+        WORK_STS        AS workSts,
+        SEND_FR_DT      AS sendFrDt,
+        SEND_TO_DT      AS sendToDt,
+        FILE_SZ         AS fileSz,
+        TOT_REC_CNT     AS totRecCnt,
+        SEND_REC_CNT    AS sendRecCnt,
+        MSG             AS msg,
+        REGR_ID         AS regrId,
+        REG_DT          AS regDt,
+        UPDR_ID         AS updrId,
+        UPD_DT          AS updDt,
+        FILE_NAME       AS fileName,
+        RCV_DY          AS rcvDy
+      FROM COM_BATFILE_TRN
+      WHERE 1=1
+      AND REG_DT<![CDATA[<=]]>SYSDATE()
+    </select>
+
+    <select id="getComBatResTrn" resultType="edu.project.domain.ComBatResTrnVO">
+      SELECT
+        MBRSH_PGM_ID  AS mbrshPgmId,
+        FILE_ID       AS fileId,
+        FILE_NM       AS fileNm,
+        WORK_DY       AS workDy,
+        WORK_FR_TM    AS workFrTm,
+        WORK_STS      AS workSts,
+        WORK_TO_TM    AS workToTm,
+        RCV_DY        AS rcvDy,
+        RCV_TM        AS rcvTm,
+        TGT_CNT       AS tgtCnt,
+        ERR_CNT       AS errCnt,
+        RES_FILE_NM1  AS resFileNm1,
+        RES_FILE_NM2  AS resFileNm2,
+        BRD_REQ_NO    AS brdReqNo,
+        REGR_ID       AS regrId,
+        REG_DT        AS regDt,
+        UPDR_ID       AS updrId,
+        UPD_DT        AS updDt
+      FROM COM_BATRES_TRN
+      WHERE 1=1
+      AND REG_DT<![CDATA[<=]]>SYSDATE()
+    </select>
+    <select id="getAllBatDatFlgMst" resultType="edu.project.domain.BatDatFlgMstVO">
+      SELECT
+        MBRSH_PGM_ID        AS mbrshPgmId,
+        FILE_ID             AS fileId,
+        HNM_FILE_NM         AS hnmFileNm,
+        TELGRM_NO           AS telgrmNo,
+        TELGRM_TYP          AS telgrmTyp,
+        FILE_FG             AS fileFg,
+        ORGAN_CD            AS organCd,
+        AVL_FR_DY           AS avlFrDy,
+        AVL_TO_DY           AS avlToDy,
+        BAT_BRD_FILE_FRM_FG AS batBrdFileFrmFg,
+        IF_CYCLE_FG         AS ifCycleFg,
+        IF_CHNL_FG          AS ifChnlFg,
+        SEND_RECV_FG        AS sendRecvFg,
+        FILE_TYPE           AS fileType,
+        FILE_SEND_YN        AS fileSendYn,
+        SEND_HOST_NM        AS sendHostNm,
+        MAP_FILE_FG         AS mapFileFg,
+        MAP_FILE_ID         AS mapFileId,
+        LMT_APL_YN          AS lmtAplYn,
+        RES_RPL_YN          AS resRplYn,
+        RES_FILE_NM         AS resFileNm,
+        RES_FILE_TYP        AS resFileTyp,
+        REC_CNT_FG          AS rcvCntFg,
+        REC_LEN             AS recLen,
+        PROCESS_EXE_CNT     AS processExeCnt,
+        REQ_FILE_PATH_NM    AS reqFilePathNm,
+        RES_FILE_PATH_NM    AS resFilePathNm,
+        MEMO_CNTS           AS monoCnts,
+        REGR_ID             AS regrId,
+        REG_DT              AS regDt,
+        UPDR_ID             AS updrId,
+        UPD_DT              AS updDt,
+        RCV_ORGAN_CD        AS rcvOrganCd,
+        RCV_SVR_IP          AS rcvSvrIp,
+        BIL_IF_KEY          AS bilIfKey
+      FROM BAT_DATFLG_MST
+      WHERE 1=1
+    </select>
+    <select id="getAllComBatSchMst" resultType="edu.project.domain.ComBatSchMstVO">
+      SELECT
+        MBRSH_PGM_ID          AS mbrshPgmId,
+        BAT_ID                AS batId,
+        BAT_NM                AS batNm,
+        BAT_EXE_FILE_PATH_NM  AS batExeFilePathNm,
+        BAT_TYP               AS batTyp,
+        BAT_EXE_DT            AS batExeDt,
+        BAT_EXPL              AS batExpl,
+        BAT_USE_FG            AS batUseFg,
+        BAT_WORK_FG           AS batWorkFg,
+        BAT_PARAM_CNT         AS batParamCnt,
+        BAT_PARAM_VAL_CNTS1   AS batParamVAlCnts1,
+        BAT_PARAM_VAL_CNTS2   AS batParamVAlCnts2,
+        BAT_PARAM_VAL_CNTS3   AS batParamVAlCnts3,
+        BAT_PARAM_VAL_CNTS4   AS batParamVAlCnts4,
+        BAT_PARAM_VAL_CNTS5   AS batParamVAlCnts5,
+        BAT_PARAM_VAL_CNTS6   AS batParamVAlCnts6,
+        BAT_PARAM_VAL_CNTS7   AS batParamVAlCnts7,
+        BAT_PARAM_VAL_CNTS8   AS batParamVAlCnts8,
+        BAT_PARAM_VAL_CNTS9   AS batParamVAlCnts9,
+        BAT_PARAM_VAL_CNTS10  AS batParamVAlCnts10,
+        REGR_ID               AS regrId,
+        REG_DT                AS regDt,
+        UPDR_ID               AS updrId,
+        UPD_DT                AS updDt,
+        PAT_YN                AS patYn,
+        PAT_WORK_FG           AS patWorkFg
+      FROM COM_BATSCH_MST
+      WHERE 1=1
+    </select>
+  
+    <select id="getAllComPrfBatMst" resultType="edu.project.domain.ComPrfBatMstVO">
+      SELECT
+        MBRSH_PGM_ID    AS mbrshPgmId,
+        BAT_ID          AS batId,
+        PREV_BAT_ID     AS prevBatId,
+        PREV_BAT_USE_YN AS prevBatUseYn,
+        REGR_ID         AS regrId,
+        REG_DT          AS regDt,
+        UPDR_ID         AS updrId,
+        UPD_DT          AS updDt
+      FROM COM_PRFBAT_MST
+      WHERE 1=1
+    </select>
+  
+    <select id="getComBatExcHis" resultType="edu.project.domain.ComBatExcHisVO">
+      SELECT
+        MBRSH_PGM_ID        AS mbrshPgmId,
+        BAT_EXE_SEQ         AS batExeSeq,
+        BAT_ID              AS batId,
+        BAT_EXE_STS         AS batExeSts,
+        BAT_EXE_EXPL        AS batExeExpl,
+        BAT_EXE_FR_DT       AS batExeFrDt,
+        BAT_EXE_TO_DT       AS batExeToDt,
+        BAT_EXE_READ_CNT    AS batExeReadCnt,
+        BAT_EXE_PROC_CNT    AS batExeProcCnt,
+        BAT_EXE_ECPT_CNT    AS batExeEcptCnt,
+        BAT_EXE_INP_FILE_NM AS batExeInpFileNm,
+        BAT_EXE_PRT_FILE_NM AS batExePrtFileNm,
+        REGR_ID             AS regrId,
+        REG_DT              AS regDt,
+        UPDR_ID             AS updrId,
+        UPD_DT              AS updDt,
+        MST_BAT_ID          AS mstBatId,
+        FR_TRC_NO           AS frTrcNo,
+        TO_TRC_NO           AS toTrcNo
+      FROM COM_BATEXC_HIS
+      WHERE 1=1
+      AND REG_DT<![CDATA[<=]]>SYSDATE()
+    </select>
+</mapper>

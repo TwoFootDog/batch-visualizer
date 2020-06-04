@@ -1,0 +1,28 @@
+#apiVersion: apps/v1beta2 # for versions before 1.8.0 use apps/v1beta1
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: batch-visualizer-backend-migrator-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: batch-visualizer-backend-migrator
+  template:
+    metadata:
+      labels:
+        app: batch-visualizer-backend-migrator
+    spec:
+      containers:
+        - name: batch-visualizer-backend-migrator
+          image: twofootdog/project-repo:batch-visualizer-backend-migrator
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+          env:
+            - name: VERSION
+              value: 'VERSION_STRING'
+            - name: DATE
+              value: 'DATE_STRING'
+      imagePullSecrets:
+        - name: my-secret

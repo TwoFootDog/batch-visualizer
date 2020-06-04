@@ -1,0 +1,78 @@
+        /* pipeline 변수 설정 */
+def DOCKER_IMAGE_NAME = 'twofootdog/project-repo'            // 생성하는 Docker image 이름
+def DOCKER_IMAGE_TAGS = 'batch-visualizer-backend-migrator'  // 생성하는 Docker image 태그
+def DOCKER_CONTAINER_NAME = 'backend-migrator-container'    // 생성하는 Docker Container 이름
+def NONE_IMAGE_CNT = ''                                     // 이름없는 Docker 이미지(<none>:<none>)
+def SLACK_CHANNEL = '#backend-migrator'
+
+podTemplate(label: 'builder',
+            containers: [
+                containerTemplate(name: 'gradle', image: 'gradle:4.5.1-jdk9', command: 'cat', ttyEnabled: true),
+                containerTemplate(name: 'kubectl', image: 'k3integrations/kubectl:latest', command: 'cat', ttyEnabled: true)
+            ],
+            volumes: [
+                hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/home/admin/k8s/jenkins/.gradle'),
+                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+                hostPathVolume(mountPath: '/usr/bin/docker', hostPath: '/usr/bin/docker')
+            ]) {
+    node('builder') {
+        stage('Start') {
+            // Slack 메시지 전송
+            //slackSend (channel: "${SLACK_CHANNEL}", color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+	    }
+        stage('Build') {
+            container('gradle') {
+                /* 도커 이미지를 활용하여 gradle 빌드를 수행하여 ./build/libs에 jar파일 생성 */
+                //sh 'chmod +x gradlew'
+                //sh './gradlew -x test clean build'
+                //sh 'gradle -x test build' //aa
+            }
+        }
+        stage('end') {
+            sh 'ls -trn'
+        }
+    }
+}
+/*       stage('Build') {
+            container('gradle') {
+                /* 도커 이미지를 활용하여 gradle 빌드를 수행하여 ./build/libs에 jar파일 생성 */
+                //sh 'chmod +x gradlew'
+                //sh './gradlew -x test clean build'
+                sh 'gradle -x test build' //aa
+            }
+        }
+        stage('Docker build') {
+            /* ./build/libs 생성된 jar파일을 도커파일을 활용하여 도커 빌드를 수행한다 */
+            sh 'docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAGS} .'
+        }
+        stage('Create Docker Image') {
+            sh 'docker login -u twofootdog -p rkdalsrb8^'
+            sh 'docker push ${DOCKER_IMAGE_NAME}:{DOCKER_IMAGE_TAGS}'
+        }
+        stage('Docker rm') {
+            /* 이전에 생성된 동일 이름의 도커 컨테이너를 정지 후 삭제하고, 도커 이미지도 삭제한다. 이때 image는
+            동일한 이름으로 재 생성했기 때문에 기존에 존재하던 image는 파일명이 없는 <none> 이미지가 되었기 때문에
+            <none> 이미지를 삭제해 준다. */
+                sh 'docker ps -f name=${DOCKER_CONTAINER_NAME} -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=${DOCKER_CONTAINER_NAME} -q | xargs -r docker container rm'
+                script {
+                    NONE_IMAGE_CNT = sh(script: 'docker images -f dangling=true -q | wc -l', returnStdout: true).trim()
+                    echo "none docker images count : ${NONE_IMAGE_CNT}"
+
+                    if (NONE_IMAGE_CNT > '0') {
+                        sh 'docker rmi $(docker images -f dangling=true -q)'
+                    }
+                }
+        }
+        stage('kubernetes run') {
+            /* 생성한 도커 이미지로 도커 컨테이너 생성 후 실행시킨다. 8080포트로 수행시키고, ENV1이란 변수값에 "dev" 값을 셋팅하는데
+            해당 값은 도커파일(Dockerfile)에서 확인 후 "java -jar" 명령어 수행 시 spring.profiles 설정 시 활용한다 */
+            /*sh 'docker run -d --name ${DOCKER_CONTAINER_NAME} -p 8080:8080 -e ENV1=dev ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAGS}' */
+            sh 'kubectl create -f ./k8s/k8s-deployment.yaml'
+            sh 'kubectl create -f ./k8s/k8s-service.yaml'
+        }*/
+
+
+
+
+//containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnable: true),

@@ -1,0 +1,71 @@
+spring:
+  profiles:
+    active: local # 기본 환경 선택
+
+spring.batch.job.names: ${job.name:NONE}
+#job.cron.delay: 3600000
+#logging.level.org.springframework.batch: DEBUG
+---
+# 로컬 환경
+server:
+  port: 8080
+  servlet:
+    context-path: /batch
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /application
+
+spring:
+  profiles: local
+  datasource:
+    batch-db:
+      hikari:
+#        jdbc-url: jdbc:mariadb://127.0.0.1:3306/projectdb
+#        username: project
+#        password: 1234
+        jdbc-url: jdbc:mariadb://66.42.43.41:3306/projectdb
+        username: project
+        password: vmfhwprxm12#
+        driver-class-name: org.mariadb.jdbc.Driver
+    nxmile-db:
+      hikari:
+        jdbc-url: jdbc:mariadb://198.13.47.188:19762/projectdb
+        username: mrbluesky
+        password: kang12!@
+        driver-class-name: org.mariadb.jdbc.Driver
+---
+# 개발 환경
+server:
+  port: 8080
+  servlet:
+    context-path: /batch
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /application
+
+spring:
+  profiles: dev
+  datasource:
+    batch-db:
+      hikari:
+        jdbc-url: jdbc:mariadb://66.42.43.41:3306/projectdb
+        username: project
+        password: vmfhwprxm12#
+        driver-class-name: org.mariadb.jdbc.Driver
+    nxmile-db:
+      hikari:
+        jdbc-url: jdbc:mariadb://198.13.47.188:19762/ApproveDB
+        username: mrbluesky
+        password: kang12!@
+        driver-class-name: org.mariadb.jdbc.Driver
+
+

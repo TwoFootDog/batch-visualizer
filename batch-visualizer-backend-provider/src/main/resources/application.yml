@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://198.13.47.188:19762/ApproveDB
+    username: mrbluesky
+    password: kang12!@
+  jpa:
+    database: mysql
+    #    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate # 운영시에는 validate 추천
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+
+logging:
+  file:
+    max-history: 1
+    max-size: 1MB
+  path: /home/mrbluesky/logs/
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    org.mrbluesky: INFO
+    org.hibernate: ERROR
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /application
+
+

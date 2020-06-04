@@ -1,0 +1,67 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'java'
+    id "org.sonarqube" version "2.7"
+    id 'jacoco' // sonarqube coverage 를 위함
+}
+
+archivesBaseName = 'batch-visualizer-backend-provider'
+group 'org.mrbluesky'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    String activeProfile =  System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "batch-visualizer-backend-provider"
+        property "sonar.projectKey", "batch-visualizer-backend-provider"
+        property "sonar.host.url", "http://66.42.43.41:30002/sonar"
+        property "sonar.login", "1c9a8c93a20ba4be5c542640cf5e5c4fb3e51a73"
+    }
+}
+ 
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compileOnly 'org.projectlombok:lombok:1.18.6'
+    annotationProcessor 'org.projectlombok:lombok:1.18.6'
+    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.1'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.1.5.RELEASE'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.1.6.RELEASE'
+
+    // Swagger
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.2.0.RELEASE'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.3.1'
+
+}
+//configurations{
+//
+//    all*.exclude group: 'ch.qos.logback'
+//    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+//
+//}
+//jar {
+//    manifest {
+//        attributes  'Title': 'Batch Visualizer', 'Version': 0.1, 'Main-Class': 'org.mrbluesky.Application'
+//    }
+//    archiveName 'batch-visualizer-backend-provider-0.1-SNAPSHOT.jar'
+////    dependsOn configurations.runtime
+//    from {
+//        configurations.compile.collect {it.isDirectory()? it: zipTree(it)}
+//    }
+//}

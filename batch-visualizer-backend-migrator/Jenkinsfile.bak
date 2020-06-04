@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+    environment {
+        /* pipeline 변수 설정 */
+        DOCKER_IMAGE_NAME = 'backend-migrator-image'            // 생성하는 Docker image 이름
+        DOCKER_IMAGE_TAGS = 'latest'                            // 생성하는 Docker image 태그
+        DOCKER_CONTAINER_NAME = 'backend-migrator-container'    // 생성하는 Docker Container 이름
+        NONE_IMAGE_CNT = ''                                     // 이름없는 Docker 이미지(<none>:<none>)
+        SLACK_CHANNEL = '#backend-migrator'
+    }
+    options { skipDefaultCheckout(false) }       // Git Repo 소스 Checkout
+    stages {
+        stage('Start') {
+            steps {
+                // Slack 메시지 전송
+                slackSend (channel: "${SLACK_CHANNEL}", color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+	        }
+	    }
+        stage('Build') {
+            /* 도커 이미지를 활용하여 gradle 빌드를 수행하여 ./build/libs에 jar파일 생성 */
+	        steps {
+	            sh 'chmod +x gradlew'
+                sh './gradlew -x test clean build'
+	           }
+	        }
+        stage('Docker build') {
+            /* ./build/libs 생성된 jar파일을 도커파일을 활용하여 도커 빌드를 수행한다 */
+	        steps {
+                sh 'docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAGS} .'
+            }
+	    }
+        stage('Docker rm') {
+            /* 이전에 생성된 동일 이름의 도커 컨테이너를 정지 후 삭제하고, 도커 이미지도 삭제한다. 이때 image는
+            동일한 이름으로 재 생성했기 때문에 기존에 존재하던 image는 파일명이 없는 <none> 이미지가 되었기 때문에
+            <none> 이미지를 삭제해 준다. */
+            steps {
+                sh 'docker ps -f name=${DOCKER_CONTAINER_NAME} -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=${DOCKER_CONTAINER_NAME} -q | xargs -r docker container rm'
+                script {
+                    NONE_IMAGE_CNT = sh(script: 'docker images -f dangling=true -q | wc -l', returnStdout: true).trim()
+                    echo "none docker images count : ${NONE_IMAGE_CNT}"
+
+                    if (NONE_IMAGE_CNT > '0') {
+                        sh 'docker rmi $(docker images -f dangling=true -q)'
+                    }
+                }
+            }
+        }
+	    stage('Docker run') {
+	        /* 생성한 도커 이미지로 도커 컨테이너 생성 후 실행시킨다. 8080포트로 수행시키고, ENV1이란 변수값에 "dev" 값을 셋팅하는데
+	        해당 값은 도커파일(Dockerfile)에서 확인 후 "java -jar" 명령어 수행 시 spring.profiles 설정 시 활용한다 */
+	        steps {
+                sh 'docker run -d --name ${DOCKER_CONTAINER_NAME} -p 8080:8080 -e ENV1=dev ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAGS}'
+	        }
+	    }
+    }
+    post {
+        /* Stage가 모두 수행 된 후 성공 or 실패 메시지 Slack 전송 */
+        success {
+            slackSend (channel: "${SLACK_CHANNEL}", color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+	    }
+        failure {
+            slackSend (channel: "${SLACK_CHANNEL}", color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+	    }
+    }
+}

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.project.persistence.batchDB.BatchDBMapper">
+    <insert id="setAllAprBatSchMst" parameterType="edu.project.domain.AprBatSchMstVO">
+      INSERT INTO APR_BATSCH_MST
+      SET
+        MBRSH_PGM_ID      = #{mbrshPgmId},
+        MST_BAT_ID        = #{mstBatId},
+        MST_BAT_NM        = #{mstBatNm},
+        HOST_NM           = #{hostNm},
+        INPUT_FILE_YN     = #{inputFileYn},
+        FILE_ID           = #{fileId},
+        HNM_FILE_NM       = #{hnmFileNm},
+        PRE_BAT_EXIST_YN  = #{preBatExistYn},
+        FILE_AUTO_SEND_YN = #{fileAutoSendYn},
+        MULTI_PROC_CNT    = #{multiProcCnt},
+        REPORT_TYP        = #{reportTyp},
+        APL_YN            = #{aplYn},
+        REGR_ID           = #{regrId},
+        REG_DT            = #{regDt},
+        UPDR_ID           = #{updrId},
+        UPD_DT            = #{updDt}
+      ON DUPLICATE KEY UPDATE
+        MST_BAT_NM        = #{mstBatNm},
+        HOST_NM           = #{hostNm},
+        INPUT_FILE_YN     = #{inputFileYn},
+        FILE_ID           = #{fileId},
+        HNM_FILE_NM       = #{hnmFileNm},
+        PRE_BAT_EXIST_YN  = #{preBatExistYn},
+        FILE_AUTO_SEND_YN = #{fileAutoSendYn},
+        MULTI_PROC_CNT    = #{multiProcCnt},
+        REPORT_TYP        = #{reportTyp},
+        APL_YN            = #{aplYn},
+        REGR_ID           = #{regrId},
+        REG_DT            = #{regDt},
+        UPDR_ID           = #{updrId},
+        UPD_DT            = #{updDt}
+    </insert>
+    <insert id="setAllAprBatProLst" parameterType="edu.project.domain.AprBatProLstVO">
+      INSERT INTO APR_BATPRO_LST
+      SET
+        MBRSH_PGM_ID          = #{mbrshPgmId},
+        MST_BAT_ID            = #{mstBatId},
+        WORK_SEQ              = #{workSeq},
+        MULTI_PROC_SEQ        = #{multiProcSeq},
+        PGM_ID                = #{pgmId},
+        PGM_CD                = #{pgmCd},
+        BAT_EXE_FILE_PATH_NM  = #{batExeFilePathNm},
+        LOG_FILE_DESC         = #{logFileDesc},
+        LOG_FILE_PATH_NM      = #{logFilePathNm},
+        BAT_PARAM_DM          = #{batParamDm},
+        BAT_PARAM_CNT         = #{batParamCnt},
+        BAT_PARAM_VAL_CNTS1   = #{batParamValCnts1},
+        BAT_PARAM_VAL_CNTS2   = #{batParamValCnts2},
+        BAT_PARAM_VAL_CNTS3   = #{batParamValCnts3},
+        BAT_PARAM_VAL_CNTS4   = #{batParamValCnts4},
+        BAT_PARAM_VAL_CNTS5   = #{batParamValCnts5},
+        BAT_PARAM_VAL_CNTS6   = #{batParamValCnts6},
+        BAT_PARAM_VAL_CNTS7   = #{batParamValCnts7},
+        BAT_PARAM_VAL_CNTS8   = #{batParamValCnts8},
+        BAT_PARAM_VAL_CNTS9   = #{batParamValCnts9},
+        BAT_PARAM_VAL_CNTS10  = #{batParamValCnts10},
+        REGR_ID               = #{regrId},
+        REG_DT                = #{regDt},
+        UPDR_ID               = #{updrId},
+        UPD_DT                = #{updDt}
+      ON DUPLICATE KEY UPDATE
+        PGM_ID                = #{pgmId},
+        PGM_CD                = #{pgmCd},
+        BAT_EXE_FILE_PATH_NM  = #{batExeFilePathNm},
+        LOG_FILE_DESC         = #{logFileDesc},
+        LOG_FILE_PATH_NM      = #{logFilePathNm},
+        BAT_PARAM_DM          = #{batParamDm},
+        BAT_PARAM_CNT         = #{batParamCnt},
+        BAT_PARAM_VAL_CNTS1   = #{batParamValCnts1},
+        BAT_PARAM_VAL_CNTS2   = #{batParamValCnts2},
+        BAT_PARAM_VAL_CNTS3   = #{batParamValCnts3},
+        BAT_PARAM_VAL_CNTS4   = #{batParamValCnts4},
+        BAT_PARAM_VAL_CNTS5   = #{batParamValCnts5},
+        BAT_PARAM_VAL_CNTS6   = #{batParamValCnts6},
+        BAT_PARAM_VAL_CNTS7   = #{batParamValCnts7},
+        BAT_PARAM_VAL_CNTS8   = #{batParamValCnts8},
+        BAT_PARAM_VAL_CNTS9   = #{batParamValCnts9},
+        BAT_PARAM_VAL_CNTS10  = #{batParamValCnts10},
+        REGR_ID               = #{regrId},
+        REG_DT                = #{regDt},
+        UPDR_ID               = #{updrId},
+        UPD_DT                = #{updDt}
+    </insert>
+
+    <insert id="setAllAprPrfBatMst" parameterType="edu.project.domain.AprPrfBatMstVO">
+      INSERT INTO APR_PRFBAT_MST
+      SET
+          MBRSH_PGM_ID        = #{mbrshPgmId},
+          MST_BAT_ID          = #{mstBatId},
+          PRE_MST_BAT_ID      = #{preMstBatId},
+          APL_YN              = #{aplYn},
+          REGR_ID             = #{regrId},
+          REG_DT              = #{regDt},
+          UPDR_ID             = #{updrId},
+          UPD_DT              = #{updDt}
+      ON DUPLICATE KEY UPDATE
+          APL_YN              = #{aplYn},
+          REGR_ID             = #{regrId},
+          REG_DT              = #{regDt},
+          UPDR_ID             = #{updrId},
+          UPD_DT              = #{updDt}
+    </insert>
+    <insert id="setComBatFileTrn" parameterType="edu.project.domain.ComBatFileTrnVO">
+      INSERT INTO COM_BATFILE_TRN
+      SET 
+          MBRSH_PGM_ID    = #{mbrshPgmId},
+          FILE_ID         = #{fileId},
+          FILE_NM         = #{fileNm},
+          TRANS_RCV_FG    = #{transRcvFg},
+          TRANS_ORGAN_CD  = #{transOrganCd},
+          RCV_ORGAN_CD    = #{rcvOrganCd},
+          STS_CD          = #{stsCd},
+          WORK_STS        = #{workSts},
+          SEND_FR_DT      = #{sendFrDt},
+          SEND_TO_DT      = #{sendToDt},
+          FILE_SZ         = #{fileSz},
+          TOT_REC_CNT     = #{totRecCnt},
+          SEND_REC_CNT    = #{sendRecCnt},
+          MSG             = #{msg},
+          REGR_ID         = #{regrId},
+          REG_DT          = #{regDt},
+          UPDR_ID         = #{updrId},
+          UPD_DT          = #{updDt},
+          FILE_NAME       = #{fileName},
+          RCV_DY          = #{rcvDy}
+      ON DUPLICATE KEY UPDATE
+          TRANS_RCV_FG    = #{transRcvFg},
+          TRANS_ORGAN_CD  = #{transOrganCd},
+          RCV_ORGAN_CD    = #{rcvOrganCd},
+          STS_CD          = #{stsCd},
+          WORK_STS        = #{workSts},
+          SEND_FR_DT      = #{sendFrDt},
+          SEND_TO_DT      = #{sendToDt},
+          FILE_SZ         = #{fileSz},
+          TOT_REC_CNT     = #{totRecCnt},
+          SEND_REC_CNT    = #{sendRecCnt},
+          MSG             = #{msg},
+          REGR_ID         = #{regrId},
+          REG_DT          = #{regDt},
+          UPDR_ID         = #{updrId},
+          UPD_DT          = #{updDt},
+          FILE_NAME       = #{fileName},
+          RCV_DY          = #{rcvDy}
+    </insert>
+
+    <insert id="setComBatResTrn" parameterType="edu.project.domain.ComBatResTrnVO">
+      INSERT INTO COM_BATRES_TRN
+      SET
+          MBRSH_PGM_ID  = #{mbrshPgmId},
+          FILE_ID       = #{fileId},
+          FILE_NM       = #{fileNm},
+          WORK_DY       = #{workDy},
+          WORK_FR_TM    = #{workFrTm},
+          WORK_STS      = #{workSts},
+          WORK_TO_TM    = #{workToTm},
+          RCV_DY        = #{rcvDy},
+          RCV_TM        = #{rcvTm},
+          TGT_CNT       = #{tgtCnt},
+          ERR_CNT       = #{errCnt},
+          RES_FILE_NM1  = #{resFileNm1},
+          RES_FILE_NM2  = #{resFileNm2},
+          BRD_REQ_NO    = #{brdReqNo},
+          REGR_ID       = #{regrId},
+          REG_DT        = #{regDt},
+          UPDR_ID       = #{updrId},
+          UPD_DT        = #{updDt}
+      ON DUPLICATE KEY UPDATE
+          WORK_DY       = #{workDy},
+          WORK_FR_TM    = #{workFrTm},
+          WORK_STS      = #{workSts},
+          WORK_TO_TM    = #{workToTm},
+          RCV_DY        = #{rcvDy},
+          RCV_TM        = #{rcvTm},
+          TGT_CNT       = #{tgtCnt},
+          ERR_CNT       = #{errCnt},
+          RES_FILE_NM1  = #{resFileNm1},
+          RES_FILE_NM2  = #{resFileNm2},
+          BRD_REQ_NO    = #{brdReqNo},
+          REGR_ID       = #{regrId},
+          REG_DT        = #{regDt},
+          UPDR_ID       = #{updrId},
+          UPD_DT        = #{updDt}
+    </insert>
+    
+    <insert id="setAllBatDatFlgMst" parameterType="edu.project.domain.BatDatFlgMstVO">
+      INSERT INTO BAT_DATFLG_MST
+      SET
+          MBRSH_PGM_ID        = #{mbrshPgmId},
+          FILE_ID             = #{fileId},
+          HNM_FILE_NM         = #{hnmFileNm},
+          TELGRM_NO           = #{telgrmNo},
+          TELGRM_TYP          = #{telgrmTyp},
+          FILE_FG             = #{fileFg},
+          ORGAN_CD            = #{organCd},
+          AVL_FR_DY           = #{avlFrDy},
+          AVL_TO_DY           = #{avlToDy},
+          BAT_BRD_FILE_FRM_FG = #{batBrdFileFrmFg},
+          IF_CYCLE_FG         = #{ifCycleFg},
+          IF_CHNL_FG          = #{ifChnlFg},
+          SEND_RECV_FG        = #{sendRecvFg},
+          FILE_TYPE           = #{fileType},
+          FILE_SEND_YN        = #{fileSendYn},
+          SEND_HOST_NM        = #{sendHostNm},
+          MAP_FILE_FG         = #{mapFileFg},
+          MAP_FILE_ID         = #{mapFileId},
+          LMT_APL_YN          = #{lmtAplYn},
+          RES_RPL_YN          = #{resRplYn},
+          RES_FILE_NM         = #{resFileNm},
+          RES_FILE_TYP        = #{resFileTyp},
+          REC_CNT_FG          = #{rcvCntFg},
+          REC_LEN             = #{recLen},
+          PROCESS_EXE_CNT     = #{processExeCnt},
+          REQ_FILE_PATH_NM    = #{reqFilePathNm},
+          RES_FILE_PATH_NM    = #{resFilePathNm},
+          MEMO_CNTS           = #{monoCnts},
+          REGR_ID             = #{regrId},
+          REG_DT              = #{regDt},
+          UPDR_ID             = #{updrId},
+          UPD_DT              = #{updDt},
+          RCV_ORGAN_CD        = #{rcvOrganCd},
+          RCV_SVR_IP          = #{rcvSvrIp},
+          BIL_IF_KEY          = #{bilIfKey}
+      ON DUPLICATE KEY UPDATE
+          HNM_FILE_NM         = #{hnmFileNm},
+          TELGRM_NO           = #{telgrmNo},
+          TELGRM_TYP          = #{telgrmTyp},
+          FILE_FG             = #{fileFg},
+          ORGAN_CD            = #{organCd},
+          AVL_FR_DY           = #{avlFrDy},
+          AVL_TO_DY           = #{avlToDy},
+          BAT_BRD_FILE_FRM_FG = #{batBrdFileFrmFg},
+          IF_CYCLE_FG         = #{ifCycleFg},
+          IF_CHNL_FG          = #{ifChnlFg},
+          SEND_RECV_FG        = #{sendRecvFg},
+          FILE_TYPE           = #{fileType},
+          FILE_SEND_YN        = #{fileSendYn},
+          SEND_HOST_NM        = #{sendHostNm},
+          MAP_FILE_FG         = #{mapFileFg},
+          MAP_FILE_ID         = #{mapFileId},
+          LMT_APL_YN          = #{lmtAplYn},
+          RES_RPL_YN          = #{resRplYn},
+          RES_FILE_NM         = #{resFileNm},
+          RES_FILE_TYP        = #{resFileTyp},
+          REC_CNT_FG          = #{rcvCntFg},
+          REC_LEN             = #{recLen},
+          PROCESS_EXE_CNT     = #{processExeCnt},
+          REQ_FILE_PATH_NM    = #{reqFilePathNm},
+          RES_FILE_PATH_NM    = #{resFilePathNm},
+          MEMO_CNTS           = #{monoCnts},
+          REGR_ID             = #{regrId},
+          REG_DT              = #{regDt},
+          UPDR_ID             = #{updrId},
+          UPD_DT              = #{updDt},
+          RCV_ORGAN_CD        = #{rcvOrganCd},
+          RCV_SVR_IP          = #{rcvSvrIp},
+          BIL_IF_KEY          = #{bilIfKey}
+    </insert>
+    
+    <insert id="setAllComBatSchMst" parameterType="edu.project.domain.ComBatSchMstVO">
+      INSERT INTO COM_BATSCH_MST
+      SET
+          MBRSH_PGM_ID          = #{mbrshPgmId},
+          BAT_ID                = #{batId},
+          BAT_NM                = #{batNm},
+          BAT_EXE_FILE_PATH_NM  = #{batExeFilePathNm},
+          BAT_TYP               = #{batTyp},
+          BAT_EXE_DT            = #{batExeDt},
+          BAT_EXPL              = #{batExpl},
+          BAT_USE_FG            = #{batUseFg},
+          BAT_WORK_FG           = #{batWorkFg},
+          BAT_PARAM_CNT         = #{batParamCnt},
+          BAT_PARAM_VAL_CNTS1   = #{batParamVAlCnts1},
+          BAT_PARAM_VAL_CNTS2   = #{batParamVAlCnts2},
+          BAT_PARAM_VAL_CNTS3   = #{batParamVAlCnts3},
+          BAT_PARAM_VAL_CNTS4   = #{batParamVAlCnts4},
+          BAT_PARAM_VAL_CNTS5   = #{batParamVAlCnts5},
+          BAT_PARAM_VAL_CNTS6   = #{batParamVAlCnts6},
+          BAT_PARAM_VAL_CNTS7   = #{batParamVAlCnts7},
+          BAT_PARAM_VAL_CNTS8   = #{batParamVAlCnts8},
+          BAT_PARAM_VAL_CNTS9   = #{batParamVAlCnts9},
+          BAT_PARAM_VAL_CNTS10  = #{batParamVAlCnts10},
+          REGR_ID               = #{regrId},
+          REG_DT                = #{regDt},
+          UPDR_ID               = #{updrId},
+          UPD_DT                = #{updDt},
+          PAT_YN                = #{patYn},
+          PAT_WORK_FG           = #{patWorkFg}
+      ON DUPLICATE KEY UPDATE
+          BAT_NM                = #{batNm},
+          BAT_EXE_FILE_PATH_NM  = #{batExeFilePathNm},
+          BAT_TYP               = #{batTyp},
+          BAT_EXE_DT            = #{batExeDt},
+          BAT_EXPL              = #{batExpl},
+          BAT_USE_FG            = #{batUseFg},
+          BAT_WORK_FG           = #{batWorkFg},
+          BAT_PARAM_CNT         = #{batParamCnt},
+          BAT_PARAM_VAL_CNTS1   = #{batParamVAlCnts1},
+          BAT_PARAM_VAL_CNTS2   = #{batParamVAlCnts2},
+          BAT_PARAM_VAL_CNTS3   = #{batParamVAlCnts3},
+          BAT_PARAM_VAL_CNTS4   = #{batParamVAlCnts4},
+          BAT_PARAM_VAL_CNTS5   = #{batParamVAlCnts5},
+          BAT_PARAM_VAL_CNTS6   = #{batParamVAlCnts6},
+          BAT_PARAM_VAL_CNTS7   = #{batParamVAlCnts7},
+          BAT_PARAM_VAL_CNTS8   = #{batParamVAlCnts8},
+          BAT_PARAM_VAL_CNTS9   = #{batParamVAlCnts9},
+          BAT_PARAM_VAL_CNTS10  = #{batParamVAlCnts10},
+          REGR_ID               = #{regrId},
+          REG_DT                = #{regDt},
+          UPDR_ID               = #{updrId},
+          UPD_DT                = #{updDt},
+          PAT_YN                = #{patYn},
+          PAT_WORK_FG           = #{patWorkFg}
+    </insert>
+    
+    <insert id="setAllComPrfBatMst" parameterType="edu.project.domain.ComPrfBatMstVO">
+      INSERT INTO COM_PRFBAT_MST
+      SET
+          MBRSH_PGM_ID    = #{mbrshPgmId},
+          BAT_ID          = #{batId},
+          PREV_BAT_ID     = #{prevBatId},
+          PREV_BAT_USE_YN = #{prevBatUseYn},
+          REGR_ID         = #{regrId},
+          REG_DT          = #{regDt},
+          UPDR_ID         = #{updrId},
+          UPD_DT          = #{updDt}
+      ON DUPLICATE KEY UPDATE
+          PREV_BAT_USE_YN = #{prevBatUseYn},
+          REGR_ID         = #{regrId},
+          REG_DT          = #{regDt},
+          UPDR_ID         = #{updrId},
+          UPD_DT          = #{updDt}
+    </insert>
+    
+    <insert id="setComBatExcHis" parameterType="edu.project.domain.ComBatExcHisVO">
+        INSERT INTO COM_BATEXC_HIS
+        SET
+            MBRSH_PGM_ID        = #{mbrshPgmId},
+            BAT_EXE_SEQ         = #{batExeSeq},
+            BAT_ID              = #{batId},
+            BAT_EXE_STS         = #{batExeSts},
+            BAT_EXE_EXPL        = #{batExeExpl},
+            BAT_EXE_FR_DT       = #{batExeFrDt},
+            BAT_EXE_TO_DT       = #{batExeToDt},
+            BAT_EXE_READ_CNT    = #{batExeReadCnt},
+            BAT_EXE_PROC_CNT    = #{batExeProcCnt},
+            BAT_EXE_ECPT_CNT    = #{batExeEcptCnt},
+            BAT_EXE_INP_FILE_NM = #{batExeInpFileNm},
+            BAT_EXE_PRT_FILE_NM = #{batExePrtFileNm},
+            REGR_ID             = #{regrId},
+            REG_DT              = #{regDt},
+            UPDR_ID             = #{updrId},
+            UPD_DT              = #{updDt},
+            MST_BAT_ID          = #{mstBatId},
+            FR_TRC_NO           = #{frTrcNo},
+            TO_TRC_NO           = #{toTrcNo}
+        ON DUPLICATE KEY UPDATE
+            BAT_ID              = #{batId},
+            BAT_EXE_STS         = #{batExeSts},
+            BAT_EXE_EXPL        = #{batExeExpl},
+            BAT_EXE_FR_DT       = #{batExeFrDt},
+            BAT_EXE_TO_DT       = #{batExeToDt},
+            BAT_EXE_READ_CNT    = #{batExeReadCnt},
+            BAT_EXE_PROC_CNT    = #{batExeProcCnt},
+            BAT_EXE_ECPT_CNT    = #{batExeEcptCnt},
+            BAT_EXE_INP_FILE_NM = #{batExeInpFileNm},
+            BAT_EXE_PRT_FILE_NM = #{batExePrtFileNm},
+            REGR_ID             = #{regrId},
+            REG_DT              = #{regDt},
+            UPDR_ID             = #{updrId},
+            UPD_DT              = #{updDt},
+            MST_BAT_ID          = #{mstBatId},
+            FR_TRC_NO           = #{frTrcNo},
+            TO_TRC_NO           = #{toTrcNo}
+    </insert>
+</mapper>

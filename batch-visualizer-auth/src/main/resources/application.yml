@@ -1,0 +1,75 @@
+spring:
+  profiles:
+    active: local
+#logging:
+#  config:
+#    classpath: log4j2.yml
+
+---
+jwt:
+  secret: dkqjwlrkqkddpemfdjrktlsek
+---
+# local environment
+#server:
+#  port: 8080
+#  servlet:
+#    context-path: /auth
+#
+#spring:
+#  profiles: local
+#  datasource:
+#    url: jdbc:mariadb://127.0.0.1:3306/projectdb
+#    username: project
+#    password: 1234
+#    driver-class-name: org.mariadb.jdbc.Driver
+#
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    hibernate:
+#      ddl-auto: update
+#
+## actuator
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#      base-path: /application
+---
+logging:
+  config: classpath:log4j2.yml
+---
+# dev environment
+server:
+  port: 8080
+  servlet:
+    context-path: /auth
+
+spring:
+#  profiles: dev
+  profiles: local
+  datasource:
+    url: jdbc:mariadb://66.42.43.41:3306/userdb
+    username: projectuser
+    password: vmfhwprxmdbwj12#
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /application
+
+---
+
+signInFailed:
+  code: "-1001"
+  msg: "계정이 존재하지 않거나 비밀번호가 정확하지 않습니다"
+

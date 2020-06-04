@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.project.persistence.batchDB.TblMapMstMapper">
+    <select id="getMappingTable" resultType="edu.project.domain.GetMappingTableOutVO">
+        SELECT
+        MAP.CONN_ID AS connId,
+        MAP.SRC_TBL_NM AS srcTblNm,
+        MAP.TGT_TBL_NM AS tgtTblNm,
+        CONCAT('SELECT ',
+               CONCAT('''', MAP.TGT_TBL_NM,''' AS tgtTblNm'),
+               CONCAT(',''', MAP.CONN_ID,''' AS connId'),
+               MAX(IF(TGT_COL_SEQ=1, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=2, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=3, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=4, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=5, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=6, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=7, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=8, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=9, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=10, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=11, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=12, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=13, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=14, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=15, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               MAX(IF(TGT_COL_SEQ=16, CONCAT(',', SRC_COL_NM,' AS srcCol', TGT_COL_SEQ), '')),
+               ' FROM ', MAP.SRC_TBL_NM) AS qry1
+        FROM SYS_INF_MST INF,
+        SYS_CON_MST CON,
+        TBL_MAP_MST MAP
+        WHERE INF.AVL_TO_DY<![CDATA[>=]]>SYSDATE()
+        AND INF.AVL_FR_DY<![CDATA[<=]]>SYSDATE()
+        AND INF.APL_YN = 'Y'
+        AND INF.SYS_ID = CON.SYS_ID
+        AND CON.AVL_TO_DY<![CDATA[>=]]>SYSDATE()
+        AND CON.AVL_FR_DY<![CDATA[<=]]>SYSDATE()
+        AND CON.SYS_TYP='D'
+        AND MAP.CONN_ID = CON.CONN_ID
+        GROUP BY connId, srcTblNm, tgtTblNm
+  </select>
+</mapper>
